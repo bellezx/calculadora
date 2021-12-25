@@ -49,7 +49,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_divisao"
             style="@style/operators_Button"
-            android:text="/" />
+            android:text="÷" />
 
     </LinearLayout>
 

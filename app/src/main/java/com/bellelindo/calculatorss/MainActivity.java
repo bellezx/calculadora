@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView txtExpressao,txtResultado;
     private ImageView backspace;
+    private String expressao = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,32 +44,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         multiplicacao.setOnClickListener(this);
         subtracao.setOnClickListener(this);
 
-        botao_limpar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        botao_limpar.setOnClickListener(view -> {
 
-                txtExpressao.setText("");
-                txtResultado.setText("");
+            txtExpressao.setText("");
+            txtResultado.setText("");
 
-            }
         });
 
-        backspace.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        backspace.setOnClickListener(view -> {
 
-                TextView expressao = findViewById(R.id.txt_expressao);
-                String string = expressao.getText().toString();
+            TextView expressao = findViewById(R.id.txt_expressao);
+            String string = expressao.getText().toString();
 
-                if (!string.isEmpty()){
+            if (!string.isEmpty()){
 
-                    byte var0 = 0;
-                    int var1 = string.length()-1;
-                    String txtExpressao = string.substring(var0,var1);
-                    expressao.setText(txtExpressao);
-                }
-                txtResultado.setText("");
+                byte var0 = 0;
+                int var1 = string.length()-1;
+                String txtExpressao = string.substring(var0,var1);
+                expressao.setText(txtExpressao);
             }
+            txtResultado.setText("");
         });
 
         igual.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +71,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View view) {
 
                 try {
-                    Expression expressao = new ExpressionBuilder(txtExpressao.getText().toString()).build();
+
+                    String exp = txtExpressao.getText().toString();
+                    exp = exp.replace("x", "*");
+                    exp = exp.replace("÷", "/");
+
+                    Expression expressao = new ExpressionBuilder(exp).build();
                     double resultado = expressao.evaluate();
                     long longResult = (long) resultado;
 
@@ -123,11 +123,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (txtResultado.getText().equals("")){
             txtExpressao.setText(" ");
+            expressao = " ";
         }
 
         if (limpar_dados){
             txtResultado.setText(" ");
             txtExpressao.append(string);
+            expressao = string;
         }else{
             txtExpressao.append(txtResultado.getText());
             txtExpressao.append(string);
@@ -146,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 AcrescentarUmaExpressao("1",true);
                 break;
 
-            case R.id.numero_dois:o:
+            case R.id.numero_dois:
                 AcrescentarUmaExpressao("2",true);
                 break;
 
@@ -191,11 +193,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.bt_divisao:
-                AcrescentarUmaExpressao("/",false);
+                AcrescentarUmaExpressao("÷",false);
                 break;
 
             case R.id.multiplicacao:
-                AcrescentarUmaExpressao("*",false);
+                AcrescentarUmaExpressao("x",false);
                 break;
         }
 
