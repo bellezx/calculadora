@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Este é um comentário feito por rlearsi
         IniciarComponentes();
         getSupportActionBar().hide();
 
